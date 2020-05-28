@@ -40,8 +40,9 @@ app.use(cors());
 app.use("/api", orderRouter);
 
 //Home Page
+var s = status + " " + port;
 app.get("/", (req, res) => {
-  res.send(status);
+  res.send(s);
   res.end();
 });
 
