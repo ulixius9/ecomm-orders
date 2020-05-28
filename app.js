@@ -10,6 +10,7 @@ const orderRouter = require("./route/order");
 
 // DB CONN
 var status = "DB DISCONNECTED";
+var error = "NONE";
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
@@ -17,7 +18,7 @@ mongoose
     useCreateIndex: true,
   })
   .then(() => (status = "DB CONNECTED"))
-  .catch((err) => console.log(err));
+  .catch((err) => (error = err));
 
 // PORT
 port = process.env.PORT || 3000;
@@ -40,7 +41,7 @@ app.use(cors());
 app.use("/api", orderRouter);
 
 //Home Page
-var s = status + " " + port;
+var s = status + " " + port + "\n" + error;
 app.get("/", (req, res) => {
   res.send(s);
   res.end();
