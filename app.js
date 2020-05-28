@@ -12,14 +12,23 @@ const orderRouter = require("./route/order");
 var status = "DB DISCONNECTED";
 var error = "NONE";
 mongoose
-  .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => (status = "DB CONNECTED"))
-  .catch((err) => (error = err));
-
+  .connect(
+    process.env.DATABASE,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    },
+    function (err) {
+      if (err) {
+        error = err;
+        console.log(err);
+      } else {
+        status = "DB CONNECTED";
+      }
+    }
+  )
+  .then(() => (status = "DB CONNECTED"));
 // PORT
 port = process.env.PORT || 3000;
 
@@ -41,9 +50,9 @@ app.use(cors());
 app.use("/api", orderRouter);
 
 //Home Page
-var s = status + " " + port + "\n" + error;
+// var s = status + " " + port + "\n" + error;
 app.get("/", (req, res) => {
-  res.send(s);
+  res.send("Connected");
   res.end();
 });
 
