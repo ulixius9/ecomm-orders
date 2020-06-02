@@ -7,28 +7,18 @@ const cors = require("cors");
 const app = express();
 //routers
 const orderRouter = require("./route/order");
+const membershipRouter = require("./route/membership");
 
 // DB CONN
-var status = "DB DISCONNECTED";
-var error = "NONE";
 mongoose
-  .connect(
-    process.env.DATABASE,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    },
-    function (err) {
-      if (err) {
-        error = err;
-        console.log(err);
-      } else {
-        status = "DB CONNECTED";
-      }
-    }
-  )
-  .then(() => (status = "DB CONNECTED"));
+  .connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then(console.log("DB CONNECTED"))
+  .catch((err) => console.log(err));
+
 // PORT
 port = process.env.PORT || 3000;
 
@@ -48,13 +38,7 @@ app.use(cors());
 
 //ROUTERS
 app.use("/api", orderRouter);
-
-//Home Page
-// var s = status + " " + port + "\n" + error;
-app.get("/", (req, res) => {
-  res.send("Connected");
-  res.end();
-});
+app.use("/api", membershipRouter);
 
 // SERVER
 app.listen(port, () => console.log(`app running on ${port}`));
