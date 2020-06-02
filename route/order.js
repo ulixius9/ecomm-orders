@@ -26,7 +26,7 @@ router.post(
 );
 
 // Read All
-router.get("/order/all/", getAllOrders);
+router.get("/orders", getAllOrders);
 
 // Read One
 router.get("/order/:orderId", getOrder);

@@ -4,7 +4,7 @@ const {
   getMembershipById,
   createMembership,
   getMembership,
-  getAllMembership,
+  getAllMemberships,
   updateMembershipStatus,
   updateMembership,
 } = require("../controller/membership");
@@ -36,7 +36,7 @@ router.post(
 router.get("/membership/:membershipId", getMembership);
 
 //Read All
-router.get("/membership/all", getAllMembership);
+router.get("/memberships", getAllMemberships);
 
 // Update Status
 router.put("/membership/:membershipId/status", updateMembershipStatus);

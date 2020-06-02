@@ -30,12 +30,9 @@ exports.createMembership = (req, res) => {
   });
 };
 
-//TODO: Solve CASTERROR
-exports.getAllMembership = (req, res) => {
+exports.getAllMemberships = (req, res) => {
   //Populate Users
   Membership.find().exec((err, memberships) => {
-    console.log(memberships);
-
     if (err) {
       return res.status(400).json({
         error: "No memberships found in DB",
@@ -68,8 +65,6 @@ exports.updateMembershipStatus = (req, res) => {
 exports.updateMembership = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ error: errors.array() });
-  console.log(req.membership);
-  console.log("************************");
   Membership.findByIdAndUpdate(
     { _id: req.membership._id },
     { $set: req.body },
