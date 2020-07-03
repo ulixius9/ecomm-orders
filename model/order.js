@@ -2,28 +2,26 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 const { currency_enum, status_enum } = require("./constants/order");
 
-/*
-// Temporary project caart schema 
-const productCartSchema = mongoose.Schema({
-  product: {
-    type: ObjectId,
-    ref: "Product",
-  },
-  name: String,
-  count: Number,
-  price: Number,
-});
-*/
-// const productCart = mongoose.model("ProductCart", productCartSchema);
-
 const orderShema = mongoose.Schema(
   {
     // products: [productCartSchema],
     // Enter mannual aaray of product id for testing
-    products: {
-      type: Array,
-      required: true,
-    },
+    products: [
+      {
+        product_id: {
+          type: ObjectId,
+          ref: "Product",
+        },
+        varient_id: {
+          type: ObjectId,
+          ref: "",
+        },
+        quantity: Number,
+        sku: String,
+        price_inc_tax: Number,
+        price_ex_tax: Number,
+      },
+    ],
     currency: {
       type: String,
       enum: currency_enum,
@@ -40,15 +38,76 @@ const orderShema = mongoose.Schema(
     discount_tax: { Type: Number, default: 0 },
     shipping_total: Number,
     shipping_tax: Number,
-    /*
-    // Enter mannual id for testing 
     user: {
       type: ObjectId,
-      ref: "User",
-    },*/
-    user: String,
-    billing_address: String,
-    shipping_address: String,
+      ref: "Customers",
+    },
+    billing_address: {
+      first_name: {
+        type: String,
+      },
+      last_name: {
+        type: String,
+      },
+      address_line_1: {
+        type: String,
+        required: true,
+      },
+      address_line_2: {
+        type: String,
+        default: null,
+      },
+      state: String,
+      city: {
+        type: String,
+      },
+      country: {
+        type: String,
+      },
+      zip: {
+        type: String,
+      },
+      phone: {
+        type: String,
+      },
+      default: {
+        type: Boolean,
+        default: false,
+      },
+    },
+    shipping_address: {
+      first_name: {
+        type: String,
+      },
+      last_name: {
+        type: String,
+      },
+      address_line_1: {
+        type: String,
+        required: true,
+      },
+      address_line_2: {
+        type: String,
+        default: null,
+      },
+      state: String,
+      city: {
+        type: String,
+      },
+      country: {
+        type: String,
+      },
+      zip: {
+        type: String,
+      },
+      phone: {
+        type: String,
+      },
+      default: {
+        type: Boolean,
+        default: false,
+      },
+    },
     payment_method: String,
     payment_method_title: String,
     transaction_id: String,
@@ -57,6 +116,8 @@ const orderShema = mongoose.Schema(
     cart_hash: String,
     refunds: Array,
     set_paid: Boolean,
+    tag: String,
+    send_recipts: Boolean,
     /*
     // Not sure to be included 
     items_count: { Type: Number},

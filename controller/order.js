@@ -22,6 +22,8 @@ exports.createOrder = (req, res) => {
   const order = new Order(req.body);
   order.save((err, order) => {
     if (err) {
+      console.log(err);
+
       return res.status(400).json({
         error: "Failed to save your order in DB",
       });
@@ -32,14 +34,17 @@ exports.createOrder = (req, res) => {
 
 exports.getAllOrders = (req, res) => {
   //Populate Users and Products
-  Order.find().exec((err, orders) => {
-    if (err) {
-      return res.status(400).json({
-        error: "No orders found in DB",
-      });
-    }
-    res.status(200).json(orders);
-  });
+  Order.find()
+    // .populate("user")
+    .exec((err, orders) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({
+          error: "No orders found in DB",
+        });
+      }
+      res.status(200).json(orders);
+    });
 };
 
 exports.getOrder = (req, res) => {

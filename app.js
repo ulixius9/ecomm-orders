@@ -8,6 +8,7 @@ const app = express();
 //routers
 const orderRouter = require("./route/order");
 const membershipRouter = require("./route/membership");
+const customer_addressRouter = require("./route/customer_address");
 
 // DB CONN
 mongoose
@@ -39,6 +40,7 @@ app.use(cors());
 //ROUTERS
 app.use("/api", orderRouter);
 app.use("/api", membershipRouter);
+app.use("/api", customer_addressRouter);
 
 // SERVER
 app.listen(port, () => console.log(`app running on ${port}`));
