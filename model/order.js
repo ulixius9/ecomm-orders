@@ -1,7 +1,9 @@
+//VARIABLES
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 const { currency_enum, status_enum } = require("./constants/order");
 
+//ORDERS SCHEMA
 const orderShema = mongoose.Schema(
   {
     // products: [productCartSchema],
@@ -132,6 +134,8 @@ const orderShema = mongoose.Schema(
   }
 );
 
+
+//VIRTUAL FIELDS TO ORDERS SCHEMA 
 orderShema.virtual("subtotal_ex_tax").get(function () {
   return this.subtotal - this.subtotal_tax;
 });
@@ -154,4 +158,6 @@ orderShema.virtual("total").get(function () {
 // orderShema.virtual("wrapping_cost_ex_tax").get(function () {
 //   return this.wrapping_cost_total - this.wrapping_cost_tax;
 // });
+
+//MODULE EXPORT
 module.exports = mongoose.model("Order", orderShema);
