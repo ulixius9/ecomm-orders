@@ -21,7 +21,7 @@ mongoose
   .catch((err) => console.log(err));
 
 // PORT
-port = process.env.PORT || 3000;
+port = process.env.PORT || 5000;
 
 // MIDDLEWARES
 app.use(
